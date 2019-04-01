@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>外卖助手</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!--<script src="js/jquery-3.3.1.js"></script>-->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #upBox {
+            text-align: center;
+            width: 500px;
+            padding: 20px;
+            border: 1px solid #666;
+            margin: 150px auto 200px;
+            position: relative;
+            border-radius: 10px;
+        }
+
+        #inputBox {
+            width: 100%;
+            height: 40px;
+            border: 1px solid cornflowerblue;
+            color: cornflowerblue;
+            border-radius: 20px;
+            position: relative;
+            text-align: center;
+            line-height: 40px;
+            overflow: hidden;
+            font-size: 16px;
+        }
+
+        #inputBox input {
+            width: 114%;
+            height: 40px;
+            opacity: 0;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: -14%;
+
+        }
+
+        #imgBox {
+            text-align: left;
+        }
+
+        .imgContainer {
+            display: inline-block;
+            width: 32%;
+            height: 150px;
+            margin-left: 1%;
+            border: 1px solid #666666;
+            position: relative;
+            margin-top: 30px;
+            box-sizing: border-box;
+        }
+
+        .imgContainer img {
+            width: 100%;
+            height: 150px;
+            cursor: pointer;
+        }
+
+        .imgContainer p {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: black;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+        }
+
+        .imgContainer:hover p {
+            display: block;
+        }
+
+        #btn, #profiles, #process {
+            outline: none;
+            width: 100px;
+            height: 30px;
+            background: cornflowerblue;
+            border: 1px solid cornflowerblue;
+            color: white;
+            cursor: pointer;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+
+        #downLoad {
+            outline: none;
+            width: 120px;
+            height: 30px;
+            background: cornflowerblue;
+            border: 6.5px solid cornflowerblue;
+            border-right-width: 32px;
+            border-left-width: 32px;
+            color: white;
+            cursor: pointer;
+            margin-top: 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 10pt;
+        }
+
+        /* 加载遮罩 */
+        #loading {
+            /* 半透明孔雀蓝*/
+            background-color: #33A1C980;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 1;
+            margin-top: 0px;
+            top: 0px;
+        }
+
+        #loading-center {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        #loading-center-absolute {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: 200px;
+            width: 200px;
+            margin-top: -100px;
+            margin-left: -100px;
+            -ms-transform: rotate(-135deg);
+            -webkit-transform: rotate(-135deg);
+            transform: rotate(-135deg);
+        }
+
+        .object {
+            -moz-border-radius: 50% 50% 50% 50%;
+            -webkit-border-radius: 50% 50% 50% 50%;
+            border-radius: 50% 50% 50% 50%;
+            position: absolute;
+            border: 5px solid #FFF;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            -webkit-animation: animate 2s infinite;
+            animation: animate 2s infinite;
+        }
+
+        #object_one {
+            left: 75px;
+            top: 75px;
+            width: 50px;
+            height: 50px;
+        }
+
+        #object_two {
+            left: 65px;
+            top: 65px;
+            width: 70px;
+            height: 70px;
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+        }
+
+        #object_three {
+            left: 55px;
+            top: 55px;
+            width: 90px;
+            height: 90px;
+            -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+        }
+
+        #object_four {
+            left: 45px;
+            top: 45px;
+            width: 110px;
+            height: 110px;
+            -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+
+        }
+
+        @-webkit-keyframes animate {
+            50% {
+                -ms-transform: rotate(360deg) scale(0.8);
+                -webkit-transform: rotate(360deg) scale(0.8);
+                transform: rotate(360deg) scale(0.8);
+            }
+        }
+
+        @keyframes animate {
+            50% {
+                -ms-transform: rotate(360deg) scale(0.8);
+                -webkit-transform: rotate(360deg) scale(0.8);
+                transform: rotate(360deg) scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body style="">
+<div style="width: 100%;height:100%;position: relative;">
+    <div id="upBox">
+        <div id="inputBox">
+            <input type="file" title="请选择图片" id="file" multiple="multiple"
+                   accept="image/png,image/jpg,image/gif,image/JPEG">点击选择图片
+        </div>
+        <div id="imgBox">
+        </div>
+        <button id="btn">上传</button>
+        <!-- 线上
+        <a id="downLoad" href="http://192.168.0.102:2019/helper/zip/外卖报销统计.zip" download="外卖报销统计.zip">下载</a>
+        -->
+        <a id="downLoad" href="http://localhost:2019/zip/外卖报销统计.zip" download="外卖报销统计.zip">下载</a>
+        <button id="profiles">使用须知</button>
+        <button id="process">报销流程</button>
+    </div>
+</div>
+
+<script src="js/uploadImg.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    imgUpload({
+        inputId: 'file', //input框id
+        imgBox: 'imgBox', //图片容器id
+        buttonId: 'btn', //提交按钮id
+        profiles: 'profiles',// 使用须知
+        process: 'process',// 报销流程
+        /**
+         * 线上
+         * upUrl: 'http://192.168.0.102:2019/helper/helper/build',  //提交地址
+         */
+        upUrl: 'http://localhost:2019/helper/build',  //提交地址
+        data: 'file' //参数名
+    })
+</script>
+</body>
+</html>
